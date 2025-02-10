@@ -1,0 +1,24 @@
+name: Renovate
+on:
+  workflow_dispatch:
+    inputs:
+      debugLogLevel:
+        description: 'Debug log level'
+        required: false
+        default: false
+        type: boolean
+      recreateClosedPrs:
+        description: 'Recreate closed PRs'
+        required: false
+        default: false
+        type: boolean
+  schedule:
+    - cron: '0 11,15 * * *'
+
+jobs:
+  call-workflow:
+    uses: Billhop/workflows/.github/workflows/renovate.yaml@main
+    with:
+      debugLogLevel: ${{ inputs.debugLogLevel || false }}
+      recreateClosedPrs: ${{ inputs.recreateClosedPrs || false }}
+    secrets: inherit
